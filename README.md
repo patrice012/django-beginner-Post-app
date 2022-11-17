@@ -1,0 +1,1 @@
+# django-beginner-Post-app
