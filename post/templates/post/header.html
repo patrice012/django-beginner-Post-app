@@ -1,0 +1,35 @@
+
+
+
+{% block content %}
+
+
+{% if request.path == post.get_absolute_url %}
+    <header id="welcome-section" class="welcome-section">
+        <h1>{{post.title}}</h1>
+        <p>Publier par {{post.author.user.username}} </p>
+    </header>
+
+{% elif request.path == '/create/' %}
+    <header id="welcome-section" class="welcome-section">
+        <h1>Happy to create a new post!</h1>
+        <p>{{request.user.username}} </p>
+    </header>
+
+
+{% elif request.path == post.get_update_url %}
+    <header id="welcome-section" class="welcome-section">
+        <h1>Update of {{post.title}}</h1>
+        <p>by {{request.user.username}} </p>
+    </header>
+
+{% else %}
+
+    <header id="welcome-section" class="welcome-section">
+        <h1>Hey I am Patrice</h1>
+        <p>a web developer</p>
+    </header>
+    {% endif %}
+        
+{% endblock content %}
+    

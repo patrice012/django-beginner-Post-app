@@ -1,0 +1,13 @@
+{% extends 'post/base.html' %}
+
+
+{% block content %}
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        <a href="{{post.get_absolute_url}}" class="btn-post post-partage"> Annuler la suppression!</a>
+         <button type="submit" class="btn-post post-supprimer">Confirmer la suppression</button>
+    </form>
+
+{% endblock content %}
+    

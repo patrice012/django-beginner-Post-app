@@ -1,0 +1,122 @@
+{% extends 'post/base.html' %}
+{% load static %}
+{% block content %}
+
+<main>
+    <article>
+        <h1 class="post-title">{{post.overview|truncatewords:6}}  </h1> 
+        <div class="detail-section">
+            <img 
+                class="post-image" 
+                src="{{post.thumbnail.url}}" 
+                alt=""
+            >
+            <div class="post-detail">
+
+                <p>Publier par 
+                <span class="post-auteur">{{post.author.user.username}}</span>
+                le <span class="post-date-creation">{{post.timestamp|timesince}} ago
+                <p><span>views : {{post.view_count}}</span> <br>
+                    <span>comments : {{post.comment_count}}</span>
+                </p>
+                
+
+                {% if create != modifi %}
+                    <p></p>
+                {% else %}
+                    </span>modifier le <span class="post-date-modification">{{post.mod_date}}</span>
+                {% endif %}
+                </p>
+
+                <p class="post-button">Partager le post sur:
+                    <a href="#" class="btn-post post-partage">tweetter</a>
+                    <a href="#" class="btn-post post-partage">facebook</a>
+                </p>
+
+                
+                {% if user.is_authenticated %}
+                <p class="post-button">
+                    <a href="{% url 'post-create' %}" class="btn-post post-creer">Créer un post</a>
+                    <a href="{% url 'post-update' id=post.pk %}" class="btn-post post-modifier">Modifier ce post</a>
+                    <a href="{% url 'post-delete' post.id %}" class="btn-post post-supprimer">Supprimer ce post</a>
+                </p>
+
+                {% else %}
+                <p></p>
+                {% endif %}
+                    
+                
+            </div>
+        </div>
+        
+        {% comment %}
+            {% for cat in post.category.all %}
+                        <h5>{{ cat }}</h5>
+            {% endfor %}
+        {% endcomment %}
+            
+        <div class="contenu">
+
+            
+            <p class="post-contenu-section">Voici le contenu</p>
+            <p class="post-contenu">{{post.content |safe}}</p>
+        </div>
+
+    </article>
+</main>
+
+<div class="post-comment">
+    
+    <h4>Post Comments : <span class="nbr-comments">{{post.comments.count}}</span></h4>
+        
+</div>
+
+<div class="comment"> 
+    
+    {% for comment in post.get_comments  %}
+
+
+        {% if comment.user.author %}
+            <img src="{{comment.user.author.profile_picture}}" alt="">
+        
+        {% else %}
+            <img src="{% static 'post/images/add6.jpg' %}" alt="">
+            
+
+        {% endif %}
+        
+        <div class="comment-header">
+            <span>{{ comment.user.username }}</span>
+            <span>{{ comment.timestamp|timesince }} ago</span>
+        </div>
+
+        <div class="comment-body">
+            <p>{{ comment.content }}</p>
+        </div>
+                
+            
+    {% endfor %}
+        
+</div>
+
+<section class="post-contenu">
+    
+    {% if request.user.is_authenticated %}
+        
+    <header>
+        <h3>Laisser un commentaire</h3>
+    </header>
+    <form action="{% url 'post-detail' post.id %}" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Commenter </button>
+    </form>
+
+    {% else %}
+        <a href="#login"> Login to comment</a>
+    {% endif %}
+        
+</section>
+
+{% endblock content %}
+    

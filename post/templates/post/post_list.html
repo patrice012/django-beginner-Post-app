@@ -1,0 +1,33 @@
+{% extends 'post/base.html' %}
+
+{% block content %}
+
+
+    <main id="projects" class="project-section">
+        <h2 class="project-section-header">There are some of our lastest post...</h2>
+        <div class="project-grid">
+            {% for post in post %}
+            <div class="project-container">
+                <a class="prject project-title" href="{{ post.get_absolute_url }}">{{post.title}}</a>
+                <img src="{{post.thumbnail.url}}" class="project" class = "project-img" alt="">
+                <p class="project-title"><span class="code">&lt;</span>
+                {{post.content|truncatewords:20}}
+                <span class="code">&#47;&gt;</span></p>
+                
+                {% comment %}
+                    
+                <a href="{% url 'post-detail' post.id %}" class="btn btn-show-all" target="_blank">Lire plus<i class="fas fa-chevron-right"></i></a>
+                {% endcomment %}
+
+                <a href="{{ post.get_absolute_url }}" class="btn btn-show-all" target="_blank">Lire plus<i class="fas fa-chevron-right"></i></a>
+
+                    
+            </div>
+
+            {% endfor %}
+        </div>
+        <a href="#" class="btn btn-show-all" target="_blank">Show all<i class="fas fa-chevron-right"></i></a>
+    </main>
+
+
+{% endblock content %}

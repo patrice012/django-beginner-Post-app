@@ -1,0 +1,43 @@
+{% load static %}
+
+
+{% block content %}
+    <nav id="navbar" class="nav">
+
+            <span class="logo-navbar">
+                dream-blog
+            </span>
+            <ul class="nav-list">
+                <li>
+                    <a href="{% url 'post-list' %}">work</a>
+                </li>
+                <li>
+                    <a href="#">about</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+                
+                {% if request.user.is_authenticated %}
+                    
+                    <li>
+                        <a href="#">Compte</a>
+                    </li>
+
+                {% else %}
+                    <li>
+                        <a href="#">Login</a>
+                    </li>
+
+                {% endif %}
+                    
+            </ul>        
+        <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    </nav>
+
+{% endblock content %}
+    
+
+
+
+    
